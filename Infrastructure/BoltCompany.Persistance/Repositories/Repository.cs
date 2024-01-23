@@ -81,7 +81,7 @@ namespace BoltCompany.Persistence.Repositories
             return entityEntry.State == EntityState.Added;
         }
 
-        public async Task<bool> AddRangeAsync(List<T> entities)
+        public async Task<bool> AddRangeAsync(IEnumerable<T> entities)
         {
             await Table.AddRangeAsync(entities);
             return true;

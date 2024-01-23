@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
     public class UpdateProductImageCommandRequest : IRequest<UpdateProductImageCommandResponse>
     {
         public Guid Id { get; set; }
-        public string ImageUrl { get; set; }
+        public List<IFormFile> Files { get; set; }
         public bool IsCoverImage { get; set; }
         public Guid ProductId { get; set; }
     }

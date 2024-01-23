@@ -2,6 +2,8 @@ using BoltCompany.Application;
 using BoltCompany.Infrastructure;
 using BoltCompany.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -43,17 +45,44 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Statik dosyalarýn servis edilmesi
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+
+if (!Directory.Exists(uploadsPath))
+{
+    // Klasör yoksa oluþtur
+    Directory.CreateDirectory(uploadsPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
+
+// CORS konfigürasyonu
 app.UseCors(x => x
-           .SetIsOriginAllowed(origin => true)
-           .AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader());
+    .SetIsOriginAllowed(origin => true)
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.UseHttpsRedirection();
+
+app.UseRouting(); // UseRouting middleware'ini ekleyin.
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Default dosya yolu olarak index.html veya baþka bir dosya belirtmek istiyorsanýz:
+// app.UseDefaultFiles(); 
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapFallbackToFile("/uploads/{**path}", "uploads/index.html");
+    endpoints.MapControllers();
+});
 
 app.Run();

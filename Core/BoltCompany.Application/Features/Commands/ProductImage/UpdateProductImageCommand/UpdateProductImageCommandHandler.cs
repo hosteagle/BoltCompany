@@ -1,4 +1,5 @@
-﻿using BoltCompany.Application.Features.Commands.Category.UpdateCategoryCommand;
+﻿using BoltCompany.Application.Abstractions.Token;
+using BoltCompany.Application.Features.Commands.Category.UpdateCategoryCommand;
 using BoltCompany.Application.Repositories;
 using MediatR;
 using System;
@@ -13,17 +14,30 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
     public class UpdateProductImageCommandHandler : IRequestHandler<UpdateProductImageCommandRequest, UpdateProductImageCommandResponse>
     {
         private readonly IProductImageRepository _repository;
+        private readonly IFileService _fileService;
 
-        public UpdateProductImageCommandHandler(IProductImageRepository repository)
+
+        public UpdateProductImageCommandHandler(IProductImageRepository repository, IFileService fileService)
         {
             _repository = repository;
+            _fileService = fileService;
         }
 
         public async Task<UpdateProductImageCommandResponse> Handle(UpdateProductImageCommandRequest request, CancellationToken cancellationToken)
         {
             var isThereProductImageRecord = await _repository.GetSingleAsync(c => c.Id == request.Id);
 
-            isThereProductImageRecord.ImageUrl = request.ImageUrl;
+            List<string> imageUrls = new List<string>();
+
+            foreach (var file in request.Files)
+            {
+                var imgUrl = await _fileService.UploadAsync(file);
+
+                imageUrls.Add(imgUrl);
+            }
+
+            isThereProductImageRecord.ImageUrl = imageUrls.FirstOrDefault();
+            isThereProductImageRecord.ImageName = Path.GetFileName(imageUrls.FirstOrDefault());
             isThereProductImageRecord.IsCoverImage = request.IsCoverImage;
             isThereProductImageRecord.ProductId = request.ProductId;
 

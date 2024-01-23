@@ -7,6 +7,7 @@ using BoltCompany.Application.Features.Commands.ProductImage.UpdateProductImageC
 using BoltCompany.Application.Features.Queries.Product.GetProductByIdQuery;
 using BoltCompany.Application.Features.Queries.Product.GetProductsQuery;
 using BoltCompany.Application.Features.Queries.ProductImage.GetProductImageByIdQuery;
+using BoltCompany.Application.Features.Queries.ProductImage.GetProductImagesByProductIdQuery;
 using BoltCompany.Application.Features.Queries.ProductImage.GetProductImagesQuery;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,13 @@ namespace BoltCompany.API.Controllers
         {
             var result = await _mediator.Send(new GetProductImagesQueryRequest());
             return CreateActionResultInstance<GetProductImagesQueryResponse>(result);
+        }
+
+        [HttpGet("pid/{productId}")]
+        public async Task<IActionResult> GetListByProductId(Guid productId)
+        {
+            var result = await _mediator.Send(new GetProductImagesByProductIdQueryRequest { ProductId = productId });
+            return CreateActionResultInstance<GetProductImagesByProductIdQueryResponse>(result);
         }
 
         [HttpGet("{id}")]

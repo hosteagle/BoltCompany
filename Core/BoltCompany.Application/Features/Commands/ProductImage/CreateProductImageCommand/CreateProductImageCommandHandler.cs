@@ -24,20 +24,29 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.CreateProductIm
 
         public async Task<CreateProductImageCommandResponse> Handle(CreateProductImageCommandRequest request, CancellationToken cancellationToken)
         {
-            var imgUrl = await _fileService.UploadAsync(request.ImgFile);
-            var addedProductImage = new Domain.Entities.ProductImage
+            List<string> imageUrls = new List<string>();
+
+            foreach (var file in request.Files)
+            {
+                var imgUrl = await _fileService.UploadAsync(file);
+
+                imageUrls.Add(imgUrl);
+            }
+
+            var productImages = imageUrls.Select((imgUrl) => new Domain.Entities.ProductImage
             {
                 ImageUrl = imgUrl,
+                ImageName = Path.GetFileName(imgUrl),
                 IsCoverImage = request.IsCoverImage,
                 ProductId = request.ProductId,
                 IsDeleted = false,
                 IsModified = false
-            };
+            });;
 
-            await _repository.AddAsync(addedProductImage);
+            await _repository.AddRangeAsync(productImages);
             await _repository.SaveAsync();
 
-            return new CreateProductImageCommandResponse() { Message = "Product image added successfully", StatusCode = HttpStatusCode.Created };
+            return new CreateProductImageCommandResponse() { Message = "Product images added successfully", StatusCode = HttpStatusCode.Created };
         }
     }
 }

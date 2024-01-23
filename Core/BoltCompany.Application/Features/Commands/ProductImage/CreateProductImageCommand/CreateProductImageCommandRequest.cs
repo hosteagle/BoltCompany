@@ -10,7 +10,7 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.CreateProductIm
 {
     public class CreateProductImageCommandRequest : IRequest<CreateProductImageCommandResponse>
     {
-        public IFormFile ImgFile { get; set; }
+        public List<IFormFile> Files { get; set; }
         public bool IsCoverImage { get; set; }
         public Guid ProductId { get; set; }
     }

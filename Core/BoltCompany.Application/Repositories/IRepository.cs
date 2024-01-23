@@ -18,7 +18,7 @@ namespace BoltCompany.Application.Repositories
         Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
         Task<T> GetByIdAsync(string id, bool tracking = true);
         Task<bool> AddAsync(T entity);
-        Task<bool> AddRangeAsync(List<T> entities);
+        Task<bool> AddRangeAsync(IEnumerable<T> entities);
         bool Remove(T entity);
         bool RemoveRange(List<T> entities);
         Task<bool> RemoveAsync(string id);

@@ -1,4 +1,5 @@
 ﻿using BoltCompany.Application.Abstractions.Token;
+using BoltCompany.Application.Enums;
 using BoltCompany.Application.Features.Commands.Category.UpdateCategoryCommand;
 using BoltCompany.Application.Repositories;
 using MediatR;
@@ -31,7 +32,7 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
 
             foreach (var file in request.Files)
             {
-                var imgUrl = await _fileService.UploadAsync(file);
+                var imgUrl = await _fileService.UploadAsync(file, FileType.Product);
 
                 imageUrls.Add(imgUrl);
             }
@@ -40,7 +41,6 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
             isThereProductImageRecord.ImageName = Path.GetFileName(imageUrls.FirstOrDefault());
             isThereProductImageRecord.IsCoverImage = request.IsCoverImage;
             isThereProductImageRecord.ProductId = request.ProductId;
-
             _repository.Update(isThereProductImageRecord);
             await _repository.SaveAsync();
             return new UpdateProductImageCommandResponse() { StatusCode = HttpStatusCode.OK };

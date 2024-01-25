@@ -1,4 +1,5 @@
 ﻿using BoltCompany.Application.Abstractions.Token;
+using BoltCompany.Application.Enums;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,28 @@ namespace BoltCompany.Infrastructure.Services.File
 {
     public class FileService : IFileService
     {
-        public async Task<string> UploadAsync(IFormFile file)
+        private string uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+        public async Task<string> UploadAsync(IFormFile file, FileType fileType)
         {
+            string uploadsFolder = "";
             if (file == null || file.Length == 0)
                 throw new ArgumentNullException("file", "Dosya seçilmedi.");
 
-            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+            if (fileType == FileType.Product)
+            {
+                            uploadsFolder = Path.Combine(uploadsPath, "products");
 
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
+            } else if (fileType == FileType.Logo)
+            {
+                uploadsFolder = Path.Combine(uploadsPath, "logos");
+
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+            }
+
+
 
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);

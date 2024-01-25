@@ -1,4 +1,5 @@
 ﻿using BoltCompany.Application.Abstractions.Token;
+using BoltCompany.Application.Enums;
 using BoltCompany.Application.Features.Commands.Product.CreateProductCommand;
 using BoltCompany.Application.Repositories;
 using MediatR;
@@ -28,7 +29,7 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.CreateProductIm
 
             foreach (var file in request.Files)
             {
-                var imgUrl = await _fileService.UploadAsync(file);
+                var imgUrl = await _fileService.UploadAsync(file, FileType.Product);
 
                 imageUrls.Add(imgUrl);
             }

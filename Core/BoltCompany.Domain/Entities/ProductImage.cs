@@ -11,7 +11,7 @@ namespace BoltCompany.Domain.Entities
     {
         public string ImageUrl { get; set; }
         public string ImageName { get; set; }
-        public bool IsCoverImage { get; set; }
+        public bool? IsCoverImage { get; set; }
         public Guid ProductId { get; set; }
     }
 }

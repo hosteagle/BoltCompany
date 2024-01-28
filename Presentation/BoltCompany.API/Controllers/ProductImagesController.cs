@@ -1,16 +1,10 @@
-﻿using BoltCompany.Application.Features.Commands.Product.CreateProductCommand;
-using BoltCompany.Application.Features.Commands.Product.DeleteProductCommand;
-using BoltCompany.Application.Features.Commands.Product.UpdateProductCommand;
-using BoltCompany.Application.Features.Commands.ProductImage.CreateProductImageCommand;
+﻿using BoltCompany.Application.Features.Commands.ProductImage.CreateProductImageCommand;
 using BoltCompany.Application.Features.Commands.ProductImage.DeleteProductImageCommand;
 using BoltCompany.Application.Features.Commands.ProductImage.UpdateProductImageCommand;
-using BoltCompany.Application.Features.Queries.Product.GetProductByIdQuery;
-using BoltCompany.Application.Features.Queries.Product.GetProductsQuery;
 using BoltCompany.Application.Features.Queries.ProductImage.GetProductImageByIdQuery;
 using BoltCompany.Application.Features.Queries.ProductImage.GetProductImagesByProductIdQuery;
 using BoltCompany.Application.Features.Queries.ProductImage.GetProductImagesQuery;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoltCompany.API.Controllers

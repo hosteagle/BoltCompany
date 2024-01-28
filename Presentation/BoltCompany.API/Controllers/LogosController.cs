@@ -4,7 +4,6 @@ using BoltCompany.Application.Features.Commands.Logo.UpdateLogoCommand;
 using BoltCompany.Application.Features.Queries.Logo.GetLogoByIdQuery;
 using BoltCompany.Application.Features.Queries.Logo.GetLogosQuery;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoltCompany.API.Controllers

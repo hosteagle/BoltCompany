@@ -11,7 +11,7 @@ namespace BoltCompany.Application.Features.Commands.Logo.UpdateLogoCommand
     public class UpdateLogoCommandRequest : IRequest<UpdateLogoCommandResponse>
     {
         public Guid Id { get; set; }
-        public IFormFile Logo { get; set; }
-        public IFormFile Icon { get; set; }
+        public IFormFile? Logo { get; set; }
+        public IFormFile? Icon { get; set; }
     }
 }

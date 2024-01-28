@@ -36,9 +36,11 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
 
                 imageUrls.Add(imgUrl);
             }
-
-            isThereProductImageRecord.ImageUrl = imageUrls.FirstOrDefault();
-            isThereProductImageRecord.ImageName = Path.GetFileName(imageUrls.FirstOrDefault());
+            if (imageUrls is not null)
+            {
+                isThereProductImageRecord.ImageUrl = imageUrls.FirstOrDefault();
+                isThereProductImageRecord.ImageName = Path.GetFileName(imageUrls.FirstOrDefault());
+            }
             isThereProductImageRecord.IsCoverImage = request.IsCoverImage;
             isThereProductImageRecord.ProductId = request.ProductId;
             _repository.Update(isThereProductImageRecord);

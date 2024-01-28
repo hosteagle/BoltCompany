@@ -12,7 +12,7 @@ namespace BoltCompany.Application.Features.Commands.ProductImage.UpdateProductIm
     {
         public Guid Id { get; set; }
         public List<IFormFile> Files { get; set; }
-        public bool IsCoverImage { get; set; }
+        public bool? IsCoverImage { get; set; }
         public Guid ProductId { get; set; }
     }
 }

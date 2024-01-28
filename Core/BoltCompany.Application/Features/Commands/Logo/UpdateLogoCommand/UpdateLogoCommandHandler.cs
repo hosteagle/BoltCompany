@@ -26,12 +26,18 @@ namespace BoltCompany.Application.Features.Commands.Logo.UpdateLogoCommand
         public async Task<UpdateLogoCommandResponse> Handle(UpdateLogoCommandRequest request, CancellationToken cancellationToken)
         {
             var isThereLogoRecord = await _repository.GetSingleAsync(c => c.Id == request.Id);
-            var logo = await _fileService.UploadAsync(request.Logo, FileType.Logo);
-            var icon = await _fileService.UploadAsync(request.Icon, FileType.Logo);
-            isThereLogoRecord.LogoUrl = logo;
-            isThereLogoRecord.LogoName = Path.GetFileName(logo);
-            isThereLogoRecord.IconUrl = icon;
-            isThereLogoRecord.IconName = Path.GetFileName(icon);
+            if (request.Logo != null)
+            {
+                var logo = await _fileService.UploadAsync(request.Logo, FileType.Logo);
+                isThereLogoRecord.LogoUrl = logo;
+                isThereLogoRecord.LogoName = Path.GetFileName(logo);
+            }
+            if (request.Icon != null)
+            {
+                var icon = await _fileService.UploadAsync(request.Icon, FileType.Logo);
+                isThereLogoRecord.IconUrl = icon;
+                isThereLogoRecord.IconName = Path.GetFileName(icon);
+            }
             _repository.Update(isThereLogoRecord);
             await _repository.SaveAsync();
             return new UpdateLogoCommandResponse() { StatusCode = HttpStatusCode.OK };

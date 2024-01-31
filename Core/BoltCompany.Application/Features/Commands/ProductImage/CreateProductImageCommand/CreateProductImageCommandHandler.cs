@@ -1,14 +1,8 @@
 ﻿using BoltCompany.Application.Abstractions.Token;
 using BoltCompany.Application.Enums;
-using BoltCompany.Application.Features.Commands.Product.CreateProductCommand;
 using BoltCompany.Application.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BoltCompany.Application.Features.Commands.ProductImage.CreateProductImageCommand
 {

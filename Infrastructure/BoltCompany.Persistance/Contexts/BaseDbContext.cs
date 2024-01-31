@@ -27,6 +27,8 @@ namespace BoltCompany.Persistence.Contexts
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Logo> Logos { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ExtraPage> ExtraPages { get; set; }
+        public DbSet<PageDetail> PageDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

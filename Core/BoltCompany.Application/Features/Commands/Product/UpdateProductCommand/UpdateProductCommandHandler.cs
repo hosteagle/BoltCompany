@@ -26,6 +26,7 @@ namespace BoltCompany.Application.Features.Commands.Product.UpdateProductCommand
             isThereProductRecord.Name = request.Name;
             isThereProductRecord.Description = request.Description;
             isThereProductRecord.Specification = request.Specification;
+            isThereProductRecord.CategoryId = request.CategoryId;
 
             _repository.Update(isThereProductRecord);
             await _repository.SaveAsync();

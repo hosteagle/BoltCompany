@@ -31,6 +31,7 @@ namespace BoltCompany.Application.Features.Commands.Product.CreateProductCommand
                 Name = request.Name,
                 Description = request.Description,
                 Specification = request.Specification,
+                CategoryId = request.CategoryId,
                 IsDeleted = false,
                 IsModified = false
             };

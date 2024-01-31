@@ -26,6 +26,8 @@ namespace BoltCompany.Persistence
             services.AddTransient<IProductImageRepository, ProductImageRepository>();
             services.AddTransient<ILogoRepository, LogoRepository>();
             services.AddTransient<IContactRepository, ContactRepository>();
+            services.AddTransient<IExtraPageRepository, ExtraPageRepository>();
+            services.AddTransient<IPageDetailRepository, PageDetailRepository>();
 
             return services;
         }

@@ -9,6 +9,7 @@ namespace BoltCompany.Application.Enums
     public enum FileType
     {
         Product,
-        Logo
+        Logo,
+        Page
     }
 }

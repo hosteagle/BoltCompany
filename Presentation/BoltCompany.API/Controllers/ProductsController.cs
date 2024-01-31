@@ -1,15 +1,9 @@
-﻿using BoltCompany.Application.Features.Commands.About.CreateAboutCommand;
-using BoltCompany.Application.Features.Commands.About.DeleteAboutCommand;
-using BoltCompany.Application.Features.Commands.About.UpdateAboutCommand;
-using BoltCompany.Application.Features.Commands.Product.CreateProductCommand;
+﻿using BoltCompany.Application.Features.Commands.Product.CreateProductCommand;
 using BoltCompany.Application.Features.Commands.Product.DeleteProductCommand;
 using BoltCompany.Application.Features.Commands.Product.UpdateProductCommand;
-using BoltCompany.Application.Features.Queries.About.GetAboutByIdQuery;
-using BoltCompany.Application.Features.Queries.About.GetAboutsQuery;
-using BoltCompany.Application.Features.Queries.Product.GetProductByIdQuery;
-using BoltCompany.Application.Features.Queries.Product.GetProductsQuery;
+using BoltCompany.Application.Features.Queries.Product.GetProductsWithCategoryNameQuery;
+using BoltCompany.Application.Features.Queries.Product.GetProductWithCategoryNameByIdQuery;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoltCompany.API.Controllers
@@ -25,18 +19,26 @@ namespace BoltCompany.API.Controllers
             _mediator = mediator;
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> GetList()
+        //{
+        //    var result = await _mediator.Send(new GetProductsQueryRequest());
+        //    return CreateActionResultInstance<GetProductsQueryResponse>(result);
+        //}
+
+        //[HttpGet("[action]")]
         [HttpGet]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetListWithCategoryName()
         {
-            var result = await _mediator.Send(new GetProductsQueryRequest());
-            return CreateActionResultInstance<GetProductsQueryResponse>(result);
+            var result = await _mediator.Send(new GetProductsWithCategoryNameQueryRequest());
+            return CreateActionResultInstance<GetProductsWithCategoryNameQueryResponse>(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _mediator.Send(new GetProductByIdQueryRequest { Id = id });
-            return CreateActionResultInstance<GetProductByIdQueryResponse>(result);
+            var result = await _mediator.Send(new GetProductWithCategoryNameByIdQueryRequest { Id = id });
+            return CreateActionResultInstance<GetProductWithCategoryNameByIdQueryResponse>(result);
         }
 
         [HttpPost]

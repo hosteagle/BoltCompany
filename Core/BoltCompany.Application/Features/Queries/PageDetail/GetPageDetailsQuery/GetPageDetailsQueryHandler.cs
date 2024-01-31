@@ -1,17 +1,23 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BoltCompany.Application.Repositories;
+using MediatR;
+using System.Net;
 
 namespace BoltCompany.Application.Features.Queries.PageDetail.GetPageDetailsQuery
 {
     public class GetPageDetailsQueryHandler : IRequestHandler<GetPageDetailsQueryRequest, GetPageDetailsQueryResponse>
     {
-        public Task<GetPageDetailsQueryResponse> Handle(GetPageDetailsQueryRequest request, CancellationToken cancellationToken)
+        private readonly IPageDetailRepository _repository;
+
+        public GetPageDetailsQueryHandler(IPageDetailRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+
+        public async Task<GetPageDetailsQueryResponse> Handle(GetPageDetailsQueryRequest request, CancellationToken cancellationToken)
+        {
+            var data = await _repository.GetAllAsync(c => c.IsDeleted == false, false);
+
+            return new GetPageDetailsQueryResponse { PageDetails = data, StatusCode = HttpStatusCode.OK };
         }
     }
 }

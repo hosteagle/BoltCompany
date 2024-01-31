@@ -10,6 +10,7 @@ namespace BoltCompany.Application.Features.Commands.PageDetail.CreatePageDetailC
 {
     public class CreatePageDetailCommandRequest : IRequest<CreatePageDetailCommandResponse>
     {
+       // [FromForm(Name = "pageDetailList")]
         public List<PageDetailInput> PageDetailList { get; set; }
     }
 
